@@ -1,6 +1,7 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import com.bumptech.glide.*;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
+import org.parceler.Parcels;
+
 import java.util.*;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -27,7 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         this.movies = movies;
     }
 
-    // Usually involves inflating a layout from XML and returning the holder
+    //Usually involves inflating a layout from XML and returning the holder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,23 +39,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return new ViewHolder(movieView);
     }
 
-    // Involves populating data into the item through holder
+    //Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("MovieAdapter", "onBindViewHolder " + position);
-        // Get the movie at the passed in position
+        //Get the movie at the passed in position
         Movie movie = movies.get(position);
-        // Bind the movie data into the vH
+        //Bind the movie data into the vH
         holder.bind(movie);
     }
 
-    // Returns the total count of items in the list
+    //Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return movies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvTitle;
         TextView tvOverview;
@@ -63,13 +66,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
             String imageUrl;
-            // If phone is in landscape, use backdrop; else use poster image
+            //If phone is in landscape, use backdrop; else use poster image
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 imageUrl = movie.getBackdropPath();
             } else {
@@ -77,6 +82,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             }
 
             Glide.with(context).load(imageUrl).into(ivPoster);
+        }
+
+        @Override
+        public void onClick(View view) {
+            //get position
+            int position = getAdapterPosition();
+
+            //only if position is valid
+            if (position != RecyclerView.NO_POSITION) {
+                Movie movie = movies.get(position);
+                //create intent for new activity
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                //serialize movie w/ parceler, use short name for key
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                //show activity
+                context.startActivity(intent);
+            }
         }
     }
 }
