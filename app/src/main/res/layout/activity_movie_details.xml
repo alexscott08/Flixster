@@ -10,7 +10,9 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +26,7 @@
         android:numStars="5"
         android:stepSize=".5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -36,15 +38,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvVotes"
         tools:text="Overview" />
 
     <TextView
         android:id="@+id/tvReleaseDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rbVoteAverage"
+        app:layout_constraintTop_toBottomOf="@+id/tvOverview"
         tools:text="6/22/2020" />
+
+    <TextView
+        android:id="@+id/tvVotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@+id/rbVoteAverage"
+        tools:layout_editor_absoluteX="1dp"
+        tools:text="Votes: 2,500" />
 </androidx.constraintlayout.widget.ConstraintLayout>
