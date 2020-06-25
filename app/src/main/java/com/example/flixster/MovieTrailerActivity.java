@@ -50,8 +50,6 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         String id;
         // resolve the player view from the layout
         YouTubePlayerView playerView = (YouTubePlayerView) findViewById(R.id.player);
-
-//        trailers = new ArrayList<>();
         // initialize with API key stored in secrets.xml
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(TRAILER_URL, new JsonHttpResponseHandler() {

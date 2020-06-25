@@ -80,22 +80,4 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public void launchMovieTrailerActivity(View view) {
-//        Intent i = new Intent();
-//        i.putExtra("onClick", movie.getId() + "");
-//        int position = getAdapterPosition();
-//
-//        //only if position is valid
-//        if (position != RecyclerView.NO_POSITION) {
-//            Movie movie = movies.get(position);
-//            //create intent for new activity
-//            Intent intent = new Intent(context, MovieDetailsActivity.class);
-//            //serialize movie w/ parceler, use short name for key
-//            intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
-//            //show activity
-//            context.startActivity(intent);
-//        }
-//
-//    }
 }
