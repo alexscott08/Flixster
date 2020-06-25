@@ -37,9 +37,16 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         View view = binding.getRoot();
         setContentView(view);
         Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
-        String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + movie.getId() + "/videos";
+
+//        try {
+//            TRAILER_URL+= movie.getId() + "/videos";
+//        } catch (Exception e) {
+//            System.out.println("oops");
+//        }
+
         // temporary test video id -- TODO replace with movie trailer video id
-        final String videoId = "";
+        final String videoId = getIntent().getStringExtra("id");
+        String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + videoId + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         String id;
         // resolve the player view from the layout
         YouTubePlayerView playerView = (YouTubePlayerView) findViewById(R.id.player);
@@ -55,7 +62,9 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
                 try {
                     JSONArray results = jsonObject.getJSONArray("results");
                     Log.i(TAG, "Results: " + results.toString());
-                    videoId = (String) results.get(0);
+                    if (results.get(0) != null) {
+                        String key = (String) results.get(0);
+                    }
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit json exception", e);
                 }

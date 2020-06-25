@@ -69,11 +69,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //vote average is 0..10, convert to 0..5 by dividing by 2
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
+
+        //on click listener to launch trailer when view is clicked
         trailerImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                i.putExtra("onClick", movie.getId() + "");
+                i.putExtra("id", movie.getId() + "");
                 startActivity(i);
             }
         });
