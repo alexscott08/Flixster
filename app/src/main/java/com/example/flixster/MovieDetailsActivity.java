@@ -1,9 +1,13 @@
-package com.example.flixster.adapters;
+package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvVotes;
     TextView tvReleaseDate;
     RatingBar rbVoteAverage;
+    ImageView trailerImageView;
 
 
     @Override
@@ -34,13 +39,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvVotes = (TextView) findViewById(R.id.tvVotes);
         tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
         rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
+        trailerImageView = (ImageView) findViewById(R.id.trailerImageView);
 
 
         //unwrap movie from intent
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing details for %s", movie.getTitle()));
-
-
 
         //set the title, vote count, release date, and overview
         tvTitle.setText(movie.getTitle());
@@ -65,5 +69,31 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //vote average is 0..10, convert to 0..5 by dividing by 2
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
+        trailerImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+                i.putExtra("onClick", movie.getId() + "");
+                startActivity(i);
+            }
+        });
     }
+
+//    public void launchMovieTrailerActivity(View view) {
+//        Intent i = new Intent();
+//        i.putExtra("onClick", movie.getId() + "");
+//        int position = getAdapterPosition();
+//
+//        //only if position is valid
+//        if (position != RecyclerView.NO_POSITION) {
+//            Movie movie = movies.get(position);
+//            //create intent for new activity
+//            Intent intent = new Intent(context, MovieDetailsActivity.class);
+//            //serialize movie w/ parceler, use short name for key
+//            intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+//            //show activity
+//            context.startActivity(intent);
+//        }
+//
+//    }
 }
