@@ -54,8 +54,6 @@ public class Movie {
         String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         AsyncHttpClient client = new AsyncHttpClient();
 
-        //Only way to change var within api call
-        final String[] key = new String[1];
         //API call to access trailer key
         client.get(TRAILER_URL, handler);
     }

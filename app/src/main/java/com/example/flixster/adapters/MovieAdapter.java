@@ -3,6 +3,7 @@ package com.example.flixster.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,19 +64,27 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
+        ImageButton nextBtn;
+        RatingBar firstRatingBar;
+        TextView tvDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            nextBtn = itemView.findViewById(R.id.nextBtn);
+            tvDate = itemView.findViewById(R.id.tvDate);
 
-            itemView.setOnClickListener(this);
+            //only goes to next screen when arrow button is clicked
+            nextBtn.setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
+            tvOverview.setMovementMethod(new ScrollingMovementMethod());
             tvOverview.setText(movie.getOverview());
+            tvDate.setText("Released: " + movie.getReleaseDate());
             String imageUrl;
             //If phone is in landscape, use backdrop; else use poster image
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
