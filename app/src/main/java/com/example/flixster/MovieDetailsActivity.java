@@ -1,7 +1,6 @@
 package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +10,22 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.flixster.R;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.flixster.adapters.GlideApp;
 import com.example.flixster.models.Movie;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import okhttp3.Headers;
 
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
+    final String TAG = "MovieDetailsActivity";
     Movie movie;
     TextView tvTitle;
     TextView tvOverview;
@@ -26,6 +33,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvReleaseDate;
     RatingBar rbVoteAverage;
     ImageView trailerImageView;
+    ImageView playBtnImageView;
+    String videoKey;
 
 
     @Override
@@ -39,6 +48,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvVotes = (TextView) findViewById(R.id.tvVotes);
         tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
         rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
+        playBtnImageView = (ImageView) findViewById(R.id.playBtnImageView);
         trailerImageView = (ImageView) findViewById(R.id.trailerImageView);
 
 
@@ -46,7 +56,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing details for %s", movie.getTitle()));
 
-        //set the title, vote count, release date, and overview
+        //set the img, title, vote count, release date, and overview
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
         int voteCount = movie.getVotes();
@@ -70,14 +80,41 @@ public class MovieDetailsActivity extends AppCompatActivity {
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
 
-        //on click listener to launch trailer when view is clicked
-        trailerImageView.setOnClickListener(new View.OnClickListener() {
+        //on click listener to launch trailer when img is clicked
+        playBtnImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                i.putExtra("id", movie.getId() + "");
+                i.putExtra("id", videoKey);
                 startActivity(i);
             }
         });
+
+        try {
+            movie.findTrailerId(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.d(TAG, "onSuccess");
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray results = jsonObject.getJSONArray("results");
+                        Log.i(TAG, "Results: " + results.toString());
+                        if (results != null) {
+                            videoKey = results.getJSONObject(0).getString("key");
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Hit json exception", e);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
+
 }

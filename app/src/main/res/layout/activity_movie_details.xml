@@ -24,20 +24,20 @@
         style="Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:numStars="5"
         android:stepSize=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/trailerImageView" />
 
     <TextView
         android:id="@+id/tvOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvVotes"
         tools:text="Overview" />
@@ -56,20 +56,35 @@
         android:id="@+id/tvVotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         android:textAlignment="center"
         android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rbVoteAverage"
-        tools:layout_editor_absoluteX="1dp"
         tools:text="Votes: 2,500" />
 
     <ImageView
         android:id="@+id/trailerImageView"
-        android:layout_width="315dp"
-        android:layout_height="285dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="408dp"
+        android:layout_height="194dp"
+        android:alpha=".3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
-        app:layout_constraintVertical_bias="0.497"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/playBtnImageView"
+        android:layout_width="222dp"
+        android:layout_height="132dp"
+        app:layout_constraintBottom_toBottomOf="@+id/trailerImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTitle"
+        app:layout_constraintVertical_bias="0.516"
         app:srcCompat="@android:drawable/ic_media_play" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

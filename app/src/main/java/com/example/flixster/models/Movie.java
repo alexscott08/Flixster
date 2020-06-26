@@ -50,14 +50,15 @@ public class Movie {
         return movies;
     }
 
-    public static List<String> fromJsonArrayTrailer(JSONArray trailerJsonArray) throws JSONException {
-        List<String> trailers = new ArrayList<>();
-        for (int i = 0; i < trailerJsonArray.length(); i++) {
-            trailers.add(trailerJsonArray.getJSONObject(i).toString());
-        }
-        return trailers;
-    }
+    public void findTrailerId(JsonHttpResponseHandler handler) throws JSONException {
+        String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        AsyncHttpClient client = new AsyncHttpClient();
 
+        //Only way to change var within api call
+        final String[] key = new String[1];
+        //API call to access trailer key
+        client.get(TRAILER_URL, handler);
+    }
 
     public String getBackdropPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);
