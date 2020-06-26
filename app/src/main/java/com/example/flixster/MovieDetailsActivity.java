@@ -3,6 +3,7 @@ package com.example.flixster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -61,14 +62,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         //set the img, title, vote count, release date, and overview
         //adds rounded corners to posters
+        String imageUrl;
+        //If phone is in landscape, use backdrop; else use poster image
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageUrl = movie.getPosterPath();
+        } else {
+            imageUrl = movie.getBackdropPath();
+        }
+        //adds rounded corners to posters
         int radius = 30; // corner radius, higher value = more rounded
         int margin = 10; // crop margin, set to 0 for corners with no crop
         GlideApp.with(this)
-                .load(movie.getBackdropPath())
+                .load(imageUrl)
                 .transform(new RoundedCornersTransformation(radius, margin))
                 .into(trailerImageView);
-//        Glide.with(this).load(movie.getBackdropPath()).into(trailerImageView);
-//        Glide.with(this).load(movie.getPosterPath()).into(bkgrdImageView);
 
         tvTitle.setText(movie.getTitle());
         tvOverview.setMovementMethod(new ScrollingMovementMethod());

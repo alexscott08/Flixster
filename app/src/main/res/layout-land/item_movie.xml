@@ -8,15 +8,15 @@
 
     <ImageButton
         android:id="@+id/nextBtn"
-        android:layout_width="48dp"
-        android:layout_height="165dp"
+        android:layout_width="39dp"
+        android:layout_height="75dp"
         android:layout_below="@+id/tvTitle"
         android:layout_alignBottom="@+id/tvOverview"
         android:layout_alignParentEnd="false"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="63dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="64dp"
         android:layout_toEndOf="@+id/tvOverview"
         android:alpha=".7"
         android:background="#AFEEEE"
@@ -49,8 +49,8 @@
 
     <TextView
         android:id="@+id/tvOverview"
-        android:layout_width="288dp"
-        android:layout_height="197dp"
+        android:layout_width="285dp"
+        android:layout_height="146dp"
         android:layout_below="@+id/tvTitle"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
@@ -64,10 +64,10 @@
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_below="@+id/tvOverview"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="241dp"
         android:textColor="#AFEEEE"
         tools:text="Released: 01-01-2020" />
