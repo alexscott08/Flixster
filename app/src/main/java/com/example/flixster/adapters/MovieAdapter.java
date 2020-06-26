@@ -13,6 +13,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
@@ -65,24 +66,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView tvOverview;
         ImageView ivPoster;
         ImageButton nextBtn;
-        RatingBar firstRatingBar;
         TextView tvDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
-            nextBtn = itemView.findViewById(R.id.nextBtn);
-            tvDate = itemView.findViewById(R.id.tvDate);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
+            nextBtn = (ImageButton) itemView.findViewById(R.id.nextBtn);
+            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
 
             //only goes to next screen when arrow button is clicked
             nextBtn.setOnClickListener(this);
         }
 
         public void bind(Movie movie) {
-            tvTitle.setText(movie.getTitle());
-//            tvOverview.setMovementMethod(new ScrollingMovementMethod());
+            tvTitle.setText(movie.getTitle());;
             tvOverview.setText(movie.getOverview());
             tvDate.setText("Released: " + movie.getReleaseDate());
             String imageUrl;
@@ -93,13 +92,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 imageUrl = movie.getPosterPath();
             }
 
+            Glide.with(context).load(imageUrl).into(ivPoster);
             //adds rounded corners to posters
-            int radius = 30; // corner radius, higher value = more rounded
-            int margin = 10; // crop margin, set to 0 for corners with no crop
-            GlideApp.with(context)
-                    .load(imageUrl)
-                    .transform(new RoundedCornersTransformation(radius, margin))
-                    .into(ivPoster);
+//            int radius = 30; // corner radius, higher value = more rounded
+//            int margin = 10; // crop margin, set to 0 for corners with no crop
+//            GlideApp.with(context)
+//                    .load(imageUrl)
+//                    .transform(new RoundedCornersTransformation(radius, margin))
+//                    .into(ivPoster);
         }
 
         @Override

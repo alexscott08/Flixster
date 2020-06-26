@@ -4,24 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:alpha=".8"
+    android:background="#AFEEEE"
     tools:context=".MovieDetailsActivity"
     tools:viewBindingIgnore="true">
-
-    <ImageView
-        android:id="@+id/bkgrdImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha=".2"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
@@ -30,8 +21,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bkgrdImageView"
-        app:layout_constraintVertical_bias="0.0"
         tools:text="TITLE" />
 
     <RatingBar
@@ -41,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:numStars="5"
+        android:progressTint="#000000"
         android:stepSize=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -58,6 +48,7 @@
         android:scrollbars="vertical"
         android:scrollHorizontally="false"
         android:textAlignment="viewStart"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,12 +97,13 @@
         android:id="@+id/playBtnImageView"
         android:layout_width="187dp"
         android:layout_height="104dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="44dp"
         android:alpha=".5"
         app:layout_constraintBottom_toBottomOf="@+id/trailerImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bkgrdImageView"
-        app:layout_constraintVertical_bias="0.796"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:srcCompat="@android:drawable/ic_media_play" />
 
 

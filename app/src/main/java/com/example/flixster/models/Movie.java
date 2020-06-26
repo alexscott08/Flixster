@@ -16,8 +16,6 @@ import okhttp3.Headers;
 public class Movie {
 
     //all fields must be public for parceler
-    public static final String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + "{movie_id}" +
-            "?api_key=AIzaSyCYmklfPJL7nL08MIGyAEUjUldqWekQ77I";
     public static final String TAG = "Movie";
     String backdropPath;
     String posterPath;
@@ -51,7 +49,8 @@ public class Movie {
     }
 
     public void findTrailerId(JsonHttpResponseHandler handler) throws JSONException {
-        String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+        String TRAILER_URL = "https://api.themoviedb.org/3/movie/" + id +
+                "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         AsyncHttpClient client = new AsyncHttpClient();
 
         //API call to access trailer key

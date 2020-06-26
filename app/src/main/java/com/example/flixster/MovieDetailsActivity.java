@@ -38,7 +38,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     RatingBar rbVoteAverage;
     ImageView trailerImageView;
     ImageView playBtnImageView;
-    ImageView bkgrdImageView;
     String videoKey;
 
 
@@ -55,7 +54,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAverage);
         playBtnImageView = (ImageView) findViewById(R.id.playBtnImageView);
         trailerImageView = (ImageView) findViewById(R.id.trailerImageView);
-        bkgrdImageView = (ImageView) findViewById(R.id.bkgrdImageView);
 
         //unwrap movie from intent
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
@@ -70,7 +68,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(radius, margin))
                 .into(trailerImageView);
 //        Glide.with(this).load(movie.getBackdropPath()).into(trailerImageView);
-        Glide.with(this).load(movie.getPosterPath()).into(bkgrdImageView);
+//        Glide.with(this).load(movie.getPosterPath()).into(bkgrdImageView);
 
         tvTitle.setText(movie.getTitle());
         tvOverview.setMovementMethod(new ScrollingMovementMethod());
