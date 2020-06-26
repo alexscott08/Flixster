@@ -82,7 +82,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         public void bind(Movie movie) {
             tvTitle.setText(movie.getTitle());
-            tvOverview.setMovementMethod(new ScrollingMovementMethod());
+//            tvOverview.setMovementMethod(new ScrollingMovementMethod());
             tvOverview.setText(movie.getOverview());
             tvDate.setText("Released: " + movie.getReleaseDate());
             String imageUrl;
