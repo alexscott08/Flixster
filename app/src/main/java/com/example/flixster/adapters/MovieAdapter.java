@@ -27,6 +27,7 @@ import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.util.*;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -90,53 +91,91 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
 
         public void bind(Movie movie) {
-            tvTitle.setText(movie.getTitle());;
+            tvTitle.setText(movie.getTitle());
+            ;
             tvOverview.setText(movie.getOverview());
             tvDate.setText("Released: " + movie.getReleaseDate());
-            String imageUrl;
-            //If phone is in landscape, use backdrop; else use poster image
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                imageUrl = movie.getBackdropPath();
-            } else {
-                imageUrl = movie.getPosterPath();
-            }
-            progressBar.setVisibility(View.VISIBLE);
 
+            /* This block of code adds placeholders and progress bars while image loads/ in case
+            image doesn't load. Can likely be cleaned up.
+             */
+
+            String imageUrl;
             //adds rounded corners to posters
             int radius = 30; // corner radius, higher value = more rounded
             int margin = 10; // crop margin, set to 0 for corners with no crop
-            GlideApp.with(context)
-                    .load(imageUrl).placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            // log exception
-                            Log.e("TAG", "Error loading image", e);
-                            return false; // important to return false so the error placeholder can be placed
-                        }
+            progressBar.setVisibility(View.VISIBLE);
+            //If phone is in landscape, use backdrop; else use poster image
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                imageUrl = movie.getBackdropPath();
+                GlideApp.with(context)
+                        .load(imageUrl).placeholder(R.drawable.flicks_backdrop_placeholder)
+                        .error(R.drawable.flicks_backdrop_placeholder)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                // log exception
+                                Log.e("TAG", "Error loading image", e);
+                                return false; // important to return false so the error placeholder can be placed
+                            }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    }).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model,
-                                            Target<Drawable> target, boolean isFirstResource) {
-                    progressBar.setVisibility(View.GONE);
-                    return false;
-                }
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        }).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<Drawable> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
-                                               DataSource dataSource, boolean isFirstResource) {
-                    progressBar.setVisibility(View.GONE);
-                    return false; // important to return false so the error placeholder can be placed
-                }
-            })
-                    .transform(new RoundedCornersTransformation(radius, margin))
-                    .into(ivPoster);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                   DataSource dataSource, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
+                })
+                        .transform(new RoundedCornersTransformation(radius, margin))
+                        .into(ivPoster);
+
+            } else {
+                imageUrl = movie.getPosterPath();
+                GlideApp.with(context)
+                        .load(imageUrl).placeholder(R.drawable.flicks_movie_placeholder)
+                        .error(R.drawable.flicks_movie_placeholder)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                // log exception
+                                Log.e("TAG", "Error loading image", e);
+                                return false; // important to return false so the error placeholder can be placed
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        }).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<Drawable> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                   DataSource dataSource, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
+                })
+                        .transform(new RoundedCornersTransformation(radius, margin))
+                        .into(ivPoster);
+            }
         }
 
         @Override

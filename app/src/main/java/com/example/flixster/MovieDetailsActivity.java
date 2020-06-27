@@ -74,114 +74,159 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing details for %s", movie.getTitle()));
 
-        //set the img, title, vote count, release date, and overview
-        //adds rounded corners to posters
+
+        /** This block of code adds placeholders and progress bars while image loads/ in case
+         * image doesn't load. Can likely be cleaned up.
+         **/
+
         String imageUrl;
-        //If phone is in landscape, use backdrop; else use poster image
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            imageUrl = movie.getPosterPath();
-        } else {
-            imageUrl = movie.getBackdropPath();
-        }
-
-        // Loads progressBar if image takes awhile to load
-        progressBar.setVisibility(View.VISIBLE);
-
         //adds rounded corners to posters
         int radius = 30; // corner radius, higher value = more rounded
         int margin = 10; // crop margin, set to 0 for corners with no crop
-        GlideApp.with(this)
-                .load(imageUrl).placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        // log exception
-                        Log.e("TAG", "Error loading image", e);
-                        return false; // important to return false so the error placeholder can be placed
-                    }
+        progressBar.setVisibility(View.VISIBLE);
+        //If phone is in landscape, use backdrop; else use poster image
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageUrl = movie.getPosterPath();
+            GlideApp.with(this)
+                    .load(imageUrl).placeholder(R.drawable.flicks_movie_placeholder)
+                    .error(R.drawable.flicks_movie_placeholder)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // log exception
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                }).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                return false;
-            }
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    }).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                            Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    return false;
+                }
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                progressBar.setVisibility(View.GONE);
-                return false; // important to return false so the error placeholder can be placed
-            }
-        })
-            .transform(new RoundedCornersTransformation(radius, margin))
-                .into(trailerImageView);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                               DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    return false; // important to return false so the error placeholder can be placed
+                }
+            })
+                    .transform(new RoundedCornersTransformation(radius, margin))
+                    .into(trailerImageView);
 
+        } else {
+            imageUrl = movie.getBackdropPath();
+            GlideApp.with(this)
+                    .load(imageUrl).placeholder(R.drawable.flicks_backdrop_placeholder)
+                    .error(R.drawable.flicks_backdrop_placeholder)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // log exception
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    }).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                            Target<Drawable> target, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                               DataSource dataSource, boolean isFirstResource) {
+                    progressBar.setVisibility(View.GONE);
+                    return false; // important to return false so the error placeholder can be placed
+                }
+            })
+                    .transform(new RoundedCornersTransformation(radius, margin))
+                    .into(trailerImageView);
+        }
+
+        //set the title, vote count, release date, and overview
         tvTitle.setText(movie.getTitle());
         tvOverview.setMovementMethod(new ScrollingMovementMethod());
         tvOverview.setText(movie.getOverview());
 
-        int voteCount = movie.getVotes();
-        //adds commas to vote count
-        String voteStr = voteCount + "";
-        String voteCommas = voteStr;
-        if (voteStr.length() > 3) {
-            int counter = 1;
-            for (int i = voteStr.length() - 1; i > 0; i--) {
-                if (counter % 3 == 0) {
-                    voteCommas = voteCommas.substring(0, i) + "," + voteCommas.substring(i);
-                }
-                counter++;
+    int voteCount = movie.getVotes();
+    //adds commas to vote count
+    String voteStr = voteCount + "";
+    String voteCommas = voteStr;
+        if(voteStr.length()>3)
+
+    {
+        int counter = 1;
+        for (int i = voteStr.length() - 1; i > 0; i--) {
+            if (counter % 3 == 0) {
+                voteCommas = voteCommas.substring(0, i) + "," + voteCommas.substring(i);
             }
-        }
-        tvVotes.setText("Votes: " + voteCommas);
-
-        tvReleaseDate.setText("Released: " + movie.getReleaseDate());
-
-        //vote average is 0..10, convert to 0..5 by dividing by 2
-        float voteAverage = movie.getVoteAverage().floatValue();
-        rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
-
-        //on click listener to launch trailer when img is clicked
-        playBtnImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
-                i.putExtra("id", videoKey);
-                startActivity(i);
-            }
-        });
-        
-        //an asynchronous call to find the id of the movie's trailer
-        try {
-            movie.findTrailerId(new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.d(TAG, "onSuccess");
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        JSONArray results = jsonObject.getJSONArray("results");
-                        Log.i(TAG, "Results: " + results.toString());
-                        if (results != null) {
-                            videoKey = results.getJSONObject(0).getString("key");
-                        }
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Hit json exception", e);
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
+            counter++;
         }
     }
+        tvVotes.setText("Votes: "+voteCommas);
+
+        tvReleaseDate.setText("Released: "+movie.getReleaseDate());
+
+    //vote average is 0..10, convert to 0..5 by dividing by 2
+    float voteAverage = movie.getVoteAverage().floatValue();
+        rbVoteAverage.setRating(voteAverage =voteAverage >0?voteAverage /2.0f:voteAverage);
+
+    //on click listener to launch trailer when img is clicked
+        playBtnImageView.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        Intent i = new Intent(MovieDetailsActivity.this, MovieTrailerActivity.class);
+        i.putExtra("id", videoKey);
+        startActivity(i);
+    }
+    });
+
+    //an asynchronous call to find the id of the movie's trailer
+        try
+
+    {
+        movie.findTrailerId(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray results = jsonObject.getJSONArray("results");
+                    Log.i(TAG, "Results: " + results.toString());
+                    if (results != null) {
+                        videoKey = results.getJSONObject(0).getString("key");
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Hit json exception", e);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });
+    } catch(
+    JSONException e)
+
+    {
+        e.printStackTrace();
+    }
+}
 
 }
