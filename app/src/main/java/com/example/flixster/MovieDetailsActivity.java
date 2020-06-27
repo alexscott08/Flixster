@@ -1,7 +1,9 @@
 package com.example.flixster;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Placeholder;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -54,6 +56,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
+        //custom action bar
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title);
+
         //parse to find view obj
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvOverview = (TextView) findViewById(R.id.tvOverview);
@@ -85,7 +91,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int radius = 30; // corner radius, higher value = more rounded
         int margin = 10; // crop margin, set to 0 for corners with no crop
         GlideApp.with(this)
-                .load(imageUrl).listener(new RequestListener<Drawable>() {
+                .load(imageUrl).placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        // log exception
+                        Log.e("TAG", "Error loading image", e);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                }).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 progressBar.setVisibility(View.GONE);

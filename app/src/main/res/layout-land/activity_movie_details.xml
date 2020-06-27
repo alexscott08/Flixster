@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AFEEEE">
+
+    <TextView
+        android:id="@+id/tvReleaseDate"
+        android:layout_width="297dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@+id/tvOverview"
+        tools:text="6/22/2020" />
+
+    <TextView
+        android:id="@+id/tvOverview"
+        android:layout_width="346dp"
+        android:layout_height="126dp"
+        android:layout_marginTop="12dp"
+        android:ellipsize="none"
+        android:fadeScrollbars='false'
+        android:maxLines="8"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textAlignment="viewStart"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@+id/tvVotes"
+        tools:text="Overview" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="534dp"
+        android:layout_height="48dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/trailerImageView"
+        app:layout_constraintStart_toEndOf="@+id/trailerImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="TITLE" />
+
+    <ImageView
+        android:id="@+id/trailerImageView"
+        android:layout_width="192dp"
+        android:layout_height="383dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/playBtnImageView"
+        android:layout_width="110dp"
+        android:layout_height="63dp"
+        android:alpha=".9"
+        app:layout_constraintBottom_toBottomOf="@+id/trailerImageView"
+        app:layout_constraintEnd_toEndOf="@+id/trailerImageView"
+        app:layout_constraintStart_toStartOf="@+id/trailerImageView"
+        app:layout_constraintTop_toTopOf="@+id/trailerImageView"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <RatingBar
+        android:id="@+id/rbVoteAverage"
+        style="Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:numStars="5"
+        android:progressTint="#000000"
+        android:stepSize=".5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toEndOf="@+id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvVotes"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="160dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@+id/rbVoteAverage"
+        tools:text="Votes: 2,500" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/trailerImageView"
+        app:layout_constraintEnd_toEndOf="@+id/trailerImageView"
+        app:layout_constraintStart_toStartOf="@+id/trailerImageView"
+        app:layout_constraintTop_toTopOf="@+id/trailerImageView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,6 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView tvDate;
         ProgressBar progressBar;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
@@ -83,7 +85,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             nextBtn = (ImageButton) itemView.findViewById(R.id.nextBtn);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
-
             //only goes to next screen when arrow button is clicked
             nextBtn.setOnClickListener(this);
         }
@@ -105,7 +106,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             int radius = 30; // corner radius, higher value = more rounded
             int margin = 10; // crop margin, set to 0 for corners with no crop
             GlideApp.with(context)
-                    .load(imageUrl).listener(new RequestListener<Drawable>() {
+                    .load(imageUrl).placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // log exception
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    }).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model,
                                             Target<Drawable> target, boolean isFirstResource) {

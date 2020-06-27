@@ -31,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //use view binder
+
+        //custom action bar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
+
+        //use view binder
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -72,14 +75,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        // TODO Auto-generated method stub
-//        super.onConfigurationChanged(newConfig);
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//
-//        }
-//    }
 }
