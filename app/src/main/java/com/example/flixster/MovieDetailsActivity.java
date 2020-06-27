@@ -3,7 +3,6 @@ package com.example.flixster;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Placeholder;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,13 +11,11 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -92,14 +89,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     .error(R.drawable.flicks_movie_placeholder)
                     .listener(new RequestListener<Drawable>() {
                         @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                    Target<Drawable> target, boolean isFirstResource) {
                             // log exception
                             Log.e("TAG", "Error loading image", e);
                             return false; // important to return false so the error placeholder can be placed
                         }
 
                         @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        public boolean onResourceReady(Drawable resource, Object model,
+                                                       Target<Drawable> target, DataSource dataSource,
+                                                       boolean isFirstResource) {
                             return false;
                         }
                     }).listener(new RequestListener<Drawable>() {
@@ -127,14 +127,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     .error(R.drawable.flicks_backdrop_placeholder)
                     .listener(new RequestListener<Drawable>() {
                         @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                    Target<Drawable> target, boolean isFirstResource) {
                             // log exception
                             Log.e("TAG", "Error loading image", e);
                             return false; // important to return false so the error placeholder can be placed
                         }
 
                         @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        public boolean onResourceReady(Drawable resource, Object model,
+                                                       Target<Drawable> target, DataSource dataSource,
+                                                       boolean isFirstResource) {
                             return false;
                         }
                     }).listener(new RequestListener<Drawable>() {
@@ -197,12 +200,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     });
 
     //an asynchronous call to find the id of the movie's trailer
-        try
-
-    {
-        movie.findTrailerId(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
+        try {
+            movie.findTrailerId(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {

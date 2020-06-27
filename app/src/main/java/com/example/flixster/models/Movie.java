@@ -1,7 +1,5 @@
 package com.example.flixster.models;
 
-import android.util.Log;
-
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -9,8 +7,6 @@ import org.json.*;
 import org.parceler.Parcel;
 
 import java.util.*;
-
-import okhttp3.Headers;
 
 @Parcel
 public class Movie {

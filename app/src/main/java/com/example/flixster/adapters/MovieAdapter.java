@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -27,11 +24,9 @@ import com.example.flixster.models.Movie;
 
 import org.parceler.Parcels;
 
-import java.io.File;
 import java.util.*;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-//import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
@@ -96,9 +91,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvOverview.setText(movie.getOverview());
             tvDate.setText("Released: " + movie.getReleaseDate());
 
-            /* This block of code adds placeholders and progress bars while image loads/ in case
-            image doesn't load. Can likely be cleaned up.
-             */
+            /** This block of code adds placeholders and progress bars while image loads/ in case
+             * image doesn't load. Can likely be cleaned up.
+             **/
 
             String imageUrl;
             //adds rounded corners to posters
@@ -113,14 +108,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                         .error(R.drawable.flicks_backdrop_placeholder)
                         .listener(new RequestListener<Drawable>() {
                             @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                        Target<Drawable> target, boolean isFirstResource) {
                                 // log exception
                                 Log.e("TAG", "Error loading image", e);
                                 return false; // important to return false so the error placeholder can be placed
                             }
 
                             @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(Drawable resource, Object model,
+                                                           Target<Drawable> target, DataSource dataSource,
+                                                           boolean isFirstResource) {
                                 return false;
                             }
                         }).listener(new RequestListener<Drawable>() {
@@ -148,14 +146,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                         .error(R.drawable.flicks_movie_placeholder)
                         .listener(new RequestListener<Drawable>() {
                             @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                        Target<Drawable> target, boolean isFirstResource) {
                                 // log exception
                                 Log.e("TAG", "Error loading image", e);
                                 return false; // important to return false so the error placeholder can be placed
                             }
 
                             @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            public boolean onResourceReady(Drawable resource, Object model,
+                                                           Target<Drawable> target, DataSource dataSource,
+                                                           boolean isFirstResource) {
                                 return false;
                             }
                         }).listener(new RequestListener<Drawable>() {
