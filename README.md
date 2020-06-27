@@ -35,7 +35,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://imgur.com/L0Xnlls.gif' width='' alt='Video Walkthrough' /> (Portrait)
+<img src='https://github.com/alexscott08/Flixster/raw/master/FlixsterPortraitDemo.gif' width='' alt='Video Walkthrough' /> (Portrait)
 
 <img src='https://imgur.com/LB8aVsM.gif' width='' alt='Video Walkthrough' /> (Landscape)
 
