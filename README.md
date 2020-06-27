@@ -37,7 +37,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://github.com/alexscott08/Flixster/raw/master/FlixsterPortraitDemo.gif' width='' alt='Video Walkthrough' /> (Portrait)
 
-<img src='https://imgur.com/LB8aVsM.gif' width='' alt='Video Walkthrough' /> (Landscape)
+<img src='https://github.com/alexscott08/Flixster/raw/master/FlixsterLandscapeDemo.gif' width='' alt='Video Walkthrough' /> (Landscape)
 
 
 GIF created with [Kap](https://getkap.co/).
