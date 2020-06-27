@@ -155,7 +155,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        
+        //an asynchronous call to find the id of the movie's trailer
         try {
             movie.findTrailerId(new JsonHttpResponseHandler() {
                 @Override
